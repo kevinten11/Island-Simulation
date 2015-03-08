@@ -9,13 +9,13 @@ public class Bird
 	//beak size of baby sd variable or constant? = 
 	public final int MAX_ENERGY = 10;
 	public final int SEARCH_COST = 1;
-	public final double VARIANCE = 0.2; // for reproduction
+	public final double VARIANCE = 0.2; // for reproduction variance on beakSize and prefMateSize
 	
 	// for initial pop
 	public final double beakMean = 5.5;
-	public final double breedingPrefMean = 5.5;
+	public final double prefMateMean = 5.5;
 	public final double beakStandardDev = 0.5; // initial population generation
-	public final double breedingPrefStandardDev= 0.5;
+	public final double prefMateStandardDev= 0.5;
 	
 	public final double SEX_RATIO = .5;
 	public Boolean isMale;
@@ -28,7 +28,7 @@ public class Bird
 	public int y;
 	public int matings = 0;
 	public double beakSize;
-	public double breedingPref;
+	public double prefMateSize;
 	public int birthYear;
 	public int deathYear;
 	public ArrayList<Bird> children;
@@ -50,7 +50,7 @@ public class Bird
 		y = _y;
 		id = _id;
 		beakSize = Randomizer.getRandomNormal(beakMean, beakStandardDev);
-		breedingPref = Randomizer.getRandomNormal(breedingPrefMean, breedingPrefStandardDev);
+		prefMateSize = Randomizer.getRandomNormal(prefMateMean, prefMateStandardDev);
 		Simulator.allBirds.add(this);
 		children = new ArrayList<Bird>();
 	}	
@@ -76,6 +76,8 @@ public class Bird
 		
 		// calculate size of offspring
 		beakSize = Randomizer.getRandomNormal(aveBeakSize, Math.max(range/4, VARIANCE));
+		prefMateSize = Randomizer.getRandomNormal(_mother.prefMateSize, VARIANCE);
+		
 		_father.matings++;
 		Simulator.allBirds.add(this);
 		children = new ArrayList<Bird>();

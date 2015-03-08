@@ -338,7 +338,9 @@ public class Island
 			{
 				if (preferredSize == -1)
 				{
-					preferredSize = mother.beakSize;
+					// to go back to 1 trait system, change this back to .beakSize
+					// preferredSize = mother.beakSize;
+					preferredSize = mother.prefMateSize;
 				}
 				Boolean foundMate = false;
 				for (Bird potential: males)
