@@ -13,7 +13,9 @@ public class Bird
 	
 	// for initial pop
 	public final double beakMean = 5.5;
+	public final double breedingPrefMean = 5.5;
 	public final double beakStandardDev = 0.5; // initial population generation
+	public final double breedingPrefStandardDev= 0.5;
 	
 	public final double SEX_RATIO = .5;
 	public Boolean isMale;
@@ -26,6 +28,7 @@ public class Bird
 	public int y;
 	public int matings = 0;
 	public double beakSize;
+	public double breedingPref;
 	public int birthYear;
 	public int deathYear;
 	public ArrayList<Bird> children;
@@ -47,6 +50,7 @@ public class Bird
 		y = _y;
 		id = _id;
 		beakSize = Randomizer.getRandomNormal(beakMean, beakStandardDev);
+		breedingPref = Randomizer.getRandomNormal(breedingPrefMean, breedingPrefStandardDev);
 		Simulator.allBirds.add(this);
 		children = new ArrayList<Bird>();
 	}	
