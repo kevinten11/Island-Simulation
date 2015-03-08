@@ -12,8 +12,8 @@ public class Bird
 	public final double VARIANCE = 0.2; // for reproduction variance on beakSize and prefMateSize
 	
 	// for initial pop
-	public final double beakMean = 5.5;
-	public final double prefMateMean = 5.5;
+	public final double beakMean = 5.0;
+	public final double prefMateMean = 5.0;
 	public final double beakStandardDev = 0.5; // initial population generation
 	public final double prefMateStandardDev= 0.5;
 	
