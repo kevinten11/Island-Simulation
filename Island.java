@@ -327,25 +327,25 @@ public class Island
 			matings++;
 					
 			double difference = MATING_DIFF_THRESHOLD;
-			double preferredSize = mother.getMemorySize();
+			double preferredColor = mother.getMemoryColor();
 			
 			// if no memory and random behavior, find random mate
-			if (Simulator.mateType == Simulator.MateType.RANDOM && preferredSize == -1)
+			if (Simulator.mateType == Simulator.MateType.RANDOM && preferredColor == -1)
 			{
 				father = males.get((int)(Math.random() * males.size()));
 			}
 			else // if there is a memory or not random mating determine mate
 			{
-				if (preferredSize == -1)
+				if (preferredColor == -1)
 				{
 					// to go back to 1 trait system, change this back to .beakSize
 					// preferredSize = mother.beakSize;
-					preferredSize = mother.prefMateSize;
+					preferredColor = mother.color;
 				}
 				Boolean foundMate = false;
 				for (Bird potential: males)
 				{
-					double tempDif = Math.abs(preferredSize - potential.beakSize);
+					double tempDif = Math.abs(preferredColor - potential.color);
 					switch (Simulator.mateType)
 					{
 						case CHOOSY_PRECISE:

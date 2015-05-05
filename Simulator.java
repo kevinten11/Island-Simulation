@@ -38,6 +38,8 @@ public class Simulator {
 	// this affects the sim
 	private static int years = 100;
 	
+	private static ArrayList<SimResult> results = new ArrayList<SimResult>();
+	
 	
 	private static String genName()
 	{
@@ -101,6 +103,7 @@ public class Simulator {
 		
 		// TODO Auto-generated method stub
 		ArrayList<ArrayList<Double>> sizes = new ArrayList<ArrayList<Double>>(years);
+		ArrayList<ArrayList<Double>> colors = new ArrayList<ArrayList<Double>>(years);
 		ArrayList<ArrayList<Double>> energyDeadSizes = new ArrayList<ArrayList<Double>>(years);
 		ArrayList<ArrayList<Double>> ageDeadSizes = new ArrayList<ArrayList<Double>>(years);
 		ArrayList<Double> memMateRatio = new ArrayList<Double>(years);
@@ -109,6 +112,7 @@ public class Simulator {
 		for (int i = 0; i < years; i++ )
 		{
 			sizes.add(new ArrayList<Double>());
+			colors.add(new ArrayList<Double>());
 			energyDeadSizes.add(new ArrayList<Double>());
 			ageDeadSizes.add(new ArrayList<Double>());
 		}
@@ -117,11 +121,12 @@ public class Simulator {
 		
 		for (int i = 0; i < years; i++)
 		{			
-			System.out.println(i);
+			if (i % 100 == 0) System.out.println(i);
 			// record sizes
 			for (Bird bird: island.birds)
 			{
 				sizes.get(i).add(bird.beakSize);
+				colors.get(i).add(bird.color);
 			}
 			
 			// System.out.println("  Year:  " + i);
@@ -146,6 +151,9 @@ public class Simulator {
 			memMateRatio.add(island.reportMatings());
 		}		
 		
+		// graph plots
+		results.add(new SimResult(name, sizes, colors, energyDeadSizes, ageDeadSizes));
+		
 		int lines = 0;
 		int files = 1;
 		String fileName = years + "Years" + name + "-" + num + ".txt";
@@ -156,9 +164,10 @@ public class Simulator {
 		String x = "\t";
 		String y = "\t";
 		String z = "\t";
+		String c = "\t";
 		
-		writer.println("Generation\tData\t\tDeath Generation\tEnergy Deaths\tAge Deaths\tPop Size\tMemory Use Ratio");
-		writer2.println("Generation\tData\t\tDeath Generation\tEnergy Deaths\tAge Deaths\tPop Size\tMemory Use Ratio");
+		writer.println("Generation\tData\tColor\tDeath Generation\tEnergy Deaths\tAge Deaths\tPop Size\tMemory Use Ratio");
+		writer2.println("Generation\tData\tColor\tDeath Generation\tEnergy Deaths\tAge Deaths\tPop Size\tMemory Use Ratio");
 		int factor = Math.max(years / 500, 1);
 		
 		for (int i = 0; i < years; i++)
@@ -169,10 +178,12 @@ public class Simulator {
 				if (j < sizes.get(i).size())
 				{
 					x = sizes.get(i).get(j).toString();
+					c = colors.get(i).get(j).toString();
 				}
 				else
 				{
 					x = "";
+					c= "";
 				}
 				if (j < energyDeadSizes.get(i).size())
 				{
@@ -191,7 +202,7 @@ public class Simulator {
 					z = "";
 				}
 				
-				String nextLine = i + "\t" + x + "\t\t" + ((double)i + 0.5) + "\t" + y + "\t" + z + "\t" + sizes.get(i).size() + "\t" + memMateRatio.get(i);
+				String nextLine = i + "\t" + x + "\t" + c + "\t" + ((double)i + 0.5) + "\t" + y + "\t" + z + "\t" + sizes.get(i).size() + "\t" + memMateRatio.get(i);
 				writer.println(nextLine);
 				
 				if (i % factor == 0)
@@ -335,12 +346,14 @@ public class Simulator {
 		return j;
 	}
 	
-	public static void runSims(SeedType seed, MateType mate, MemoryType mem, int yearsToRun, int runs) throws FileNotFoundException, UnsupportedEncodingException
+	public static ArrayList<SimResult> runSims(SeedType seed, MateType mate, MemoryType mem, int yearsToRun, int runs) throws FileNotFoundException, UnsupportedEncodingException
 	{
 		years = yearsToRun;
 		seedType = seed;
 		mateType = mate;
 		memoryType = mem;
+		results.clear();
+		
 		
 		double[][] speciesCountsByYear = new double[runs][years];
 		double[][] aveSpeciesSizeByYear = new double[runs][years];
@@ -368,6 +381,7 @@ public class Simulator {
 		printMatrix(writer, aveSpeciesRangeByYear);
 		
 		writer.close();	
+		return results;
 	}
 	
 	private static void printMatrix(PrintWriter writer, double[][] matrix)

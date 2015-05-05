@@ -7,8 +7,8 @@ public class Seed
 	public double size;
 	
 	// for bimodal
-	private final double HIGH_MEAN = 7.5;
-	private final double LOW_MEAN = 2.5;
+	private final double HIGH_MEAN = 7.25;
+	private final double LOW_MEAN = 2.75;
 	private final double BIMODAL_SD = 1.0;
 	
 	// for normal (sd for both)

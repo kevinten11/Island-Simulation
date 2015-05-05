@@ -13,9 +13,9 @@ public class Bird
 	
 	// for initial pop
 	public final double beakMean = 5.0;
-	public final double prefMateMean = 5.0;
+	public final double colorMean = 5.0;
 	public final double beakStandardDev = 0.5; // initial population generation
-	public final double prefMateStandardDev= 0.5;
+	public final double colorStandardDev= 0.5;
 	
 	public final double SEX_RATIO = .5;
 	public Boolean isMale;
@@ -28,7 +28,7 @@ public class Bird
 	public int y;
 	public int matings = 0;
 	public double beakSize;
-	public double prefMateSize;
+	public double color;
 	public int birthYear;
 	public int deathYear;
 	public ArrayList<Bird> children;
@@ -50,7 +50,7 @@ public class Bird
 		y = _y;
 		id = _id;
 		beakSize = Randomizer.getRandomNormal(beakMean, beakStandardDev);
-		prefMateSize = Randomizer.getRandomNormal(prefMateMean, prefMateStandardDev);
+		color = Randomizer.getRandomNormal(colorMean, colorStandardDev);
 		Simulator.allBirds.add(this);
 		children = new ArrayList<Bird>();
 	}	
@@ -76,7 +76,7 @@ public class Bird
 		
 		// calculate size of offspring
 		beakSize = Randomizer.getRandomNormal(aveBeakSize, Math.max(range/4, VARIANCE));
-		prefMateSize = Randomizer.getRandomNormal(_mother.prefMateSize, VARIANCE);
+		color = Randomizer.getRandomNormal(_mother.color, VARIANCE);
 		
 		_father.matings++;
 		Simulator.allBirds.add(this);
@@ -100,7 +100,7 @@ public class Bird
 			int ageGap = mother.age - age;
 			if (Math.random() * (ageGap + 1) < ageGap)
 			{
-				memory.add(0, father.beakSize);
+				memory.add(0, father.color);
 				
 				// if memory too large, get rid of last memory
 				if (memory.size() >= MEMORY_SIZE)
@@ -115,7 +115,7 @@ public class Bird
 	 * gets the preferred size based on the memory type
 	 * @return size
 	 */
-	public double getMemorySize()
+	public double getMemoryColor()
 	{	
 		if (Math.random() > MEMORY_USE_RATIO)
 		{
