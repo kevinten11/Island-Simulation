@@ -6,7 +6,7 @@ To run a simulation, make a call like this in the Driver:
 
 Simulator.runSims(Simulator.SeedType.UNIFORM, Simulator.MateType.CHOOSY_CLOSE, Simulator.MemoryType.NONE, 1000, 1);
 
--This will create a text file of data points in your /Out folder ( possibly many files if size is large enough)
+- you will need an /Out folder with /Agg, /Analysis, and /Raw sub-folders
 
 A Breif Explanation of modes:
 
